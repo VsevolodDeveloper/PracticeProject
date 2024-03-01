@@ -1,0 +1,5 @@
+.blend filter=lfs diff=lfs merge=lfs -text
+.psd filter=lfs diff=lfs merge=lfs -text
+.fbx filter=lfs diff=lfs merge=lfs -text
+/Content/InfinityBladeEffects filter=lfs diff=lfs merge=lfs -text
+/Content/InfinityBladeIceLands filter=lfs diff=lfs merge=lfs -text

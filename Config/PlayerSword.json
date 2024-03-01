@@ -1,0 +1,39 @@
+{
+	"unit_attacks_by_weapon":
+	{
+		"unit_name": "MainPlayerCharacter",
+		"weapon_name": "Sword",
+		"combo_attacks": [
+			{
+				"combo_name": "SwordAttack1",
+				"required_stamina": 20,
+				"attacks_chain": [
+					"left",
+					"right",
+					"up"
+				],
+				"damage_rate": 1.2
+			},
+			{
+				"combo_name": "SwordAttack2",
+				"required_stamina": 22,
+				"attacks_chain": [
+					"right",
+					"up",
+					"left"
+				],
+				"damage_rate": 1.3
+			},
+			{
+				"combo_name": "SwordAttack3",
+				"required_stamina": 19,
+				"attacks_chain": [
+					"up",
+					"left",
+					"right"
+				],
+				"damage_rate": 1.5
+			}
+		]
+	}
+}

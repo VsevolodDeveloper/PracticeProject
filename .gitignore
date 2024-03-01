@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+Binaries
+DerivedDataCache
+Intermediate
+/Content/InfinityBladeEffects
+/Content/InfinityBladeIceLands
+Saved
+.vscode
+.vs
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+*.umap
+=======
 # Visual Studio 2015 user specific files
 .vs/
 
@@ -72,3 +91,4 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+>>>>>>> 4c3502916ef74fbab3d67bb76de453f6781c190a
