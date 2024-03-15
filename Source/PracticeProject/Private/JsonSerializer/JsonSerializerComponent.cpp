@@ -8,6 +8,7 @@ DEFINE_LOG_CATEGORY(JsonComponent_LOG);
 UJsonSerializerComponent::UJsonSerializerComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	ConfigsPath = FPaths::ProjectConfigDir() + TEXT("MovesetConfigs/");
 }
 
 FString UJsonSerializerComponent::GetComboDataInString(FUnitAttacksByWeapon UnitAttacksByWeapon)
@@ -110,13 +111,13 @@ void UJsonSerializerComponent::WriteConfig(FUnitAttacksByWeapon UnitAttacksByWea
 	TSharedRef<TJsonWriter<TCHAR>> JsonWriter = TJsonWriterFactory<TCHAR>::Create(&ConfigStream);
 	FJsonSerializer::Serialize(ConfigObject.ToSharedRef(), JsonWriter);
 
-	FString FullPath = FPaths::ProjectConfigDir() + FileName;
+	const FString FullPath = ConfigsPath + FileName;
 	FFileHelper::SaveStringToFile(ConfigStream, *FullPath);
 }
 
 bool UJsonSerializerComponent::LoadJson(FString FileName)
 {
-	FString FullPath = FPaths::ProjectConfigDir() + FileName;
+	const FString FullPath = ConfigsPath + FileName;
 
 	if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FullPath))
 	{

@@ -1,0 +1,35 @@
+{
+	"unit_attacks_by_weapon": {
+		"unit_name": "Boss",
+		"weapon_name": "Sword",
+		"combo_attacks": [
+			{
+				"combo_name": "SwordAttack1",
+				"required_stamina": 20,
+				"attacks_chain":
+				[
+					"attack1"
+				],
+				"damage_rate": 3.0
+			},
+			{
+				"combo_name": "SwordAttack2",
+				"required_stamina": 22,
+				"attacks_chain":
+				[
+					"attack2"
+				],
+				"damage_rate": 3.3
+			},
+			{
+				"combo_name": "SwordAttack3",
+				"required_stamina": 19,
+				"attacks_chain":
+				[
+					"attack3"
+				],
+				"damage_rate": 3.7
+			}
+		]
+	}
+}

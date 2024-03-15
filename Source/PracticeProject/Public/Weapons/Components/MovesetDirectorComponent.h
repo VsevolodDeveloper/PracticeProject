@@ -22,12 +22,13 @@ class PRACTICEPROJECT_API UMovesetDirectorComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
+	/** Pointer to weapon component that serialize and deserialize combo attacks for units from .json configure */
+	UPROPERTY(Transient)
+	UJsonSerializerComponent* JsonSerializerComponent;
+
 	/** Animation moveset for different type of units that can use weapon */
 	UPROPERTY(EditDefaultsOnly, Category = "Behavior")
 	TMap<EUnitType, FAnimationStructure> WeaponMoveset;
-
-	/** Component that serialize and deserialize combo attacks for units from .json configure */
-	UJsonSerializerComponent* JsonSerializerComponent;
 
 	/** Name of the table where all moveset configurations are stored */
 	UPROPERTY(EditDefaultsOnly, Category = "Behavior")
@@ -55,7 +56,7 @@ public:
 
 	/** Initialize settings and load json file */
 	UFUNCTION(BlueprintCallable, Category = "Moveset Director Component")
-	void Initialize(const FName& WeaponName, EUnitType UnitType, EWeaponType WeaponType);
+	void Initialize(UJsonSerializerComponent* InJsonSerializerComponent, const FName& WeaponName, EUnitType UnitType, EWeaponType WeaponType);
 
 	/** Get Combo attack animations list */
 	UFUNCTION(BlueprintCallable, Category = "Moveset Director Component")
@@ -72,10 +73,6 @@ public:
 	/** Get weapon moveset */
 	UFUNCTION(BlueprintPure, Category = "Moveset Director Component")
 	TMap<EUnitType, FAnimationStructure> GetWeaponMoveset() const { return WeaponMoveset; }
-
-	/** Get json serializer component */
-	UFUNCTION(BlueprintPure, Category = "Moveset Director Component")
-	UJsonSerializerComponent* GetJsonSerializerComponent() const { return JsonSerializerComponent; }
 
 	/** Get current attack damage rate */
 	float GetAttackDamageRate() const { return AttackDamageRate; }

@@ -24,6 +24,9 @@ public:
 	// Sets default values for this component's properties
 	UJsonSerializerComponent();
 
+	/** Path to folder that contains moveset configs */
+	FString ConfigsPath;
+
 	/** Hold configure of unit attacks by certain weapon, should be deserialized from .json */
 	UPROPERTY(BlueprintReadWrite, Category = "JsonComponent")
 	FUnitAttacksByWeapon UnitAtttacksByWeapon;
