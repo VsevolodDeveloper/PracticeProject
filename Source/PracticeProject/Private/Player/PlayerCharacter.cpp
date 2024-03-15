@@ -12,11 +12,11 @@ DEFINE_LOG_CATEGORY(Player_LOG);
 APlayerCharacter::APlayerCharacter()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
-	GetSpringArmComponent()->AttachToComponent(RootComponent, FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
+	GetSpringArmComponent()->SetupAttachment(RootComponent);
 	GetSpringArmComponent()->bUsePawnControlRotation = true;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
-	GetCameraComponent()->AttachToComponent(GetSpringArmComponent(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
+	GetCameraComponent()->SetupAttachment(GetSpringArmComponent());
 	GetCameraComponent()->bUsePawnControlRotation = false;
 
 	HitAnimationDirectorComponent = CreateDefaultSubobject<UHitAnimationDirectorComponent>(TEXT("HitAnimationDirectorComponent"));

@@ -1,19 +1,21 @@
 // Copyright 2023 Vsevolod Khlebnikov. All Rights Reserved.
 
 #include "Weapons/Components/MovesetDirectorComponent.h"
+#include "PracticeProject/PracticeProjectCustomLogs.h"
+
+DEFINE_LOG_CATEGORY(MovesetDirectorComponent_LOG);
 
 // Sets default values for this component's properties
 UMovesetDirectorComponent::UMovesetDirectorComponent()
 {
-	JsonSerializerComponent = CreateDefaultSubobject<UJsonSerializerComponent>(TEXT("JsonSerializerComponent"));
-
 	PrimaryComponentTick.bCanEverTick = true;
 	HeavyAttackDamageRate = 2.5f;
 	MovesetConfigsTablePath = "/Game/Blueprints/Weapons/Data/ST_MovesetConfigurations";
 }
 
-void UMovesetDirectorComponent::Initialize(const FName& WeaponName, EUnitType UnitType, EWeaponType WeaponType)
+void UMovesetDirectorComponent::Initialize(UJsonSerializerComponent* InJsonSerializerComponent, const FName& WeaponName, EUnitType UnitType, EWeaponType WeaponType)
 {
+	JsonSerializerComponent = InJsonSerializerComponent;
 	WeaponOwnerUnitType = UnitType;
 	OwnerWeaponType = WeaponType;
 
@@ -23,7 +25,14 @@ void UMovesetDirectorComponent::Initialize(const FName& WeaponName, EUnitType Un
 	const FString ConfigKeyName = UnitKeyName.Append(WeaponName.ToString());
 	FString FileName = FText::FromStringTable(MovesetConfigsTablePath, ConfigKeyName).ToString();
 
-	JsonSerializerComponent->LoadJson(FileName);
+	if (JsonSerializerComponent)
+	{
+		JsonSerializerComponent->LoadJson(FileName);
+	}
+	else
+	{
+		UE_LOG(MovesetDirectorComponent_LOG, Error, TEXT("JsonSerializerComponent is not valid"));
+	}
 }
 
 UAnimMontage* UMovesetDirectorComponent::GetComboAttack(TArray<FString>& Combo, bool& bHasComboAttacks, int& StaminaCostOfSelectedCombo)
@@ -46,21 +55,29 @@ UAnimMontage* UMovesetDirectorComponent::GetComboAttack(TArray<FString>& Combo, 
 
 TMap<FString, UAnimMontage*> UMovesetDirectorComponent::GetComboAttackList(TArray<FString>& ComboAttacks, int& StaminaCostOfSelectedCombo)
 {
-	const FString ComboName = JsonSerializerComponent->GetRandomAttackFromCombo(JsonSerializerComponent->UnitAtttacksByWeapon);
-	AttackDamageRate = JsonSerializerComponent->GetDamageRateOfCombo(JsonSerializerComponent->UnitAtttacksByWeapon, ComboName);
-
-	for (int i = 0; i < JsonSerializerComponent->UnitAtttacksByWeapon.ComboAttacks.Num(); i++)
+	if (JsonSerializerComponent)
 	{
-		const FComboAttackData ComboAttack = JsonSerializerComponent->UnitAtttacksByWeapon.ComboAttacks[i];
-		if (ComboName == ComboAttack.ComboName)
-		{
-			ComboAttacks = ComboAttack.AttacksChain;
-			StaminaCostOfSelectedCombo = JsonSerializerComponent->GetRequiredStaminaForCombo(JsonSerializerComponent->UnitAtttacksByWeapon, ComboName);
-			return WeaponMoveset[GetWeaponOwnerUnitType()].ComboAttackAnimationMoveset;
-		}
-	}
+		const FString ComboName = JsonSerializerComponent->GetRandomAttackFromCombo(JsonSerializerComponent->UnitAtttacksByWeapon);
+		AttackDamageRate = JsonSerializerComponent->GetDamageRateOfCombo(JsonSerializerComponent->UnitAtttacksByWeapon, ComboName);
 
-	return WeaponMoveset[GetWeaponOwnerUnitType()].ComboAttackAnimationMoveset;
+		for (int i = 0; i < JsonSerializerComponent->UnitAtttacksByWeapon.ComboAttacks.Num(); i++)
+		{
+			const FComboAttackData ComboAttack = JsonSerializerComponent->UnitAtttacksByWeapon.ComboAttacks[i];
+			if (ComboName == ComboAttack.ComboName)
+			{
+				ComboAttacks = ComboAttack.AttacksChain;
+				StaminaCostOfSelectedCombo = JsonSerializerComponent->GetRequiredStaminaForCombo(JsonSerializerComponent->UnitAtttacksByWeapon, ComboName);
+				return WeaponMoveset[GetWeaponOwnerUnitType()].ComboAttackAnimationMoveset;
+			}
+		}
+
+		return WeaponMoveset[GetWeaponOwnerUnitType()].ComboAttackAnimationMoveset;
+	}
+	else
+	{
+		UE_LOG(MovesetDirectorComponent_LOG, Error, TEXT("JsonSerializerComponent is not valid"));
+		return WeaponMoveset[GetWeaponOwnerUnitType()].ComboAttackAnimationMoveset;
+	}
 }
 
 UAnimMontage* UMovesetDirectorComponent::GetHeavyAttack()

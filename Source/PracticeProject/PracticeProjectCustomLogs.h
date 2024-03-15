@@ -10,3 +10,4 @@ DECLARE_LOG_CATEGORY_EXTERN(JsonComponent_LOG, Log, All);
 DECLARE_LOG_CATEGORY_EXTERN(AdvancedAnimInstance_LOG, Log, All);
 DECLARE_LOG_CATEGORY_EXTERN(DealDamageNotify_LOG, Log, All);
 DECLARE_LOG_CATEGORY_EXTERN(DamageProviderComponent_LOG, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(MovesetDirectorComponent_LOG, Log, All);

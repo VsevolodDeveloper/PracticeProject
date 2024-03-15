@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/WeaponInterface.h"
-#include "JsonSerializer/JsonSerializerComponent.h"
 #include "UObject/Object.h"
 #include "Weapons/Components/DamageProviderComponent.h"
 #include "Weapons/Components/MovesetDirectorComponent.h"
@@ -30,6 +29,10 @@ private:
 	/** Component that provide and deal damage to actor that would be hit by this weapon */
 	UPROPERTY(EditAnywhere, Category = "Component")
 	UDamageProviderComponent* DamageProviderComponent;
+
+	/** Component that serialize and deserialize combo attacks for units from .json configure */
+	UPROPERTY(EditAnywhere, Category = "Component")
+	UJsonSerializerComponent* JsonSerializerComponent;
 
 	/** Name of the current weapon */
 	UPROPERTY(EditAnywhere, Category = "Settings")
@@ -62,6 +65,10 @@ public:
 	/** Get weapon damage provider component */
 	UFUNCTION(BlueprintPure, Category = "Weapon Base")
 	UDamageProviderComponent* GetDamageProviderComponent() const { return DamageProviderComponent; }
+
+	/** Get json serializer component */
+	UFUNCTION(BlueprintPure, Category = "Moveset Director Component")
+	UJsonSerializerComponent* GetJsonSerializerComponent() const { return JsonSerializerComponent; }
 
 	/** Get weapon certain type */
 	UFUNCTION(BlueprintPure, Category = "Weapon Base")

@@ -8,6 +8,7 @@ AWeaponBase::AWeaponBase()
 {
 	MovesetDirectorComponent = CreateDefaultSubobject<UMovesetDirectorComponent>(TEXT("AnimationMovesetComp"));
 	DamageProviderComponent = CreateDefaultSubobject<UDamageProviderComponent>(TEXT("DamageProviderComponent"));
+	JsonSerializerComponent = CreateDefaultSubobject<UJsonSerializerComponent>(TEXT("JsonSerializerComponent"));
 
 	WeaponDamageRate = 1.0f;
 
@@ -23,6 +24,6 @@ void AWeaponBase::BeginPlay()
 	{
 		const ICharacterInterface* Interface = Cast<ICharacterInterface>(AWeaponBase::GetOwner());
 		const EUnitType OwnerUnitType = Interface->Execute_GetUnitType(AWeaponBase::GetOwner());
-		MovesetDirectorComponent->Initialize(WeaponName, OwnerUnitType, GetWeaponType());
+		MovesetDirectorComponent->Initialize(GetJsonSerializerComponent(), WeaponName, OwnerUnitType, GetWeaponType());
 	}
 }
