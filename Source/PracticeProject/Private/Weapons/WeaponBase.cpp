@@ -22,8 +22,8 @@ void AWeaponBase::BeginPlay()
 
 	if (AWeaponBase::GetOwner()->GetClass()->ImplementsInterface(UCharacterInterface::StaticClass()))
 	{
-		const ICharacterInterface* Interface = Cast<ICharacterInterface>(AWeaponBase::GetOwner());
-		const EUnitType OwnerUnitType = Interface->Execute_GetUnitType(AWeaponBase::GetOwner());
+		const ICharacterInterface* CharacterInterface = Cast<ICharacterInterface>(AWeaponBase::GetOwner());
+		const EUnitType OwnerUnitType = CharacterInterface->Execute_GetUnitType(AWeaponBase::GetOwner());
 		MovesetDirectorComponent->Initialize(GetJsonSerializerComponent(), WeaponName, OwnerUnitType, GetWeaponType());
 	}
 }

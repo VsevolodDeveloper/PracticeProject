@@ -123,7 +123,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Behavior")
 	float RagdollInitialDelay;
 
-	/** Time until the enemy dissapear completely after fatal hit */
+	/** Time until the enemy disappear completely after fatal hit */
 	UPROPERTY(EditAnywhere, Category = "Behavior")
 	float DyingTime;
 
@@ -216,9 +216,6 @@ protected:
 public:
 	// Sets default values for this character's properties
 	AEnemyBase();
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	/** Called on enemy's dead */
 	UFUNCTION(BlueprintImplementableEvent, Category = "Enemy|Behavior")

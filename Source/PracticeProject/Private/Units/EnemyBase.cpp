@@ -42,11 +42,6 @@ void AEnemyBase::BeginPlay()
 	}
 }
 
-void AEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
 void AEnemyBase::HeavyAttack()
 {
 	if (UnitState == EUnitState::Walking)
